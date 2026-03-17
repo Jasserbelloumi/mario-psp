@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: |
-          docker run --rm -v $(pwd):/src -w /src pspdev/pspdev:latest sh -c "make"
+          docker run --rm -v $(pwd):/src -w /src pspdev/pspdev:latest sh -c "make EBOOT.PBP"
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
