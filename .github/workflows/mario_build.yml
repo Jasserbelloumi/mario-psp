@@ -1,18 +1,14 @@
 name: Mario-Build-Action
-
 on: [push]
-
 jobs:
   build_game:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Build with PSPDev Docker
+      - name: Build
         run: |
           docker run --rm -v $(pwd):/src -w /src pspdev/pspdev:latest sh -c "make"
-
-      - name: Upload Result
+      - name: Upload
         uses: actions/upload-artifact@v3
         with:
           name: Mario-Game-EBOOT
