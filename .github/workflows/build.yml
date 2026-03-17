@@ -1,0 +1,26 @@
+name: Build PSP Game
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install PSP SDK
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+          # استخدام حاوية جاهزة للـ SDK لتوفير الوقت
+          docker pull pspdev/pspdev:latest
+
+      - name: Compile Game
+        run: |
+          docker run --rm -v $(pwd):/src -w /src pspdev/pspdev:latest sh -c "make"
+
+      - name: Upload EBOOT
+        uses: actions/upload-artifact@v3
+        with:
+          name: Mario-EBOOT
+          path: EBOOT.PBP
